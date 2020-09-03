@@ -1,4 +1,6 @@
 def solution(src, dest):
+
+    #if the start and destination are the same, return 0
     if src == dest: return 0
 
     #Representation of current game board
@@ -59,21 +61,14 @@ def solution(src, dest):
         #once all coordinates have been checked, return list of moves
         return coordinates_checked
 
-
-        # check for target number
-        #     if hit: return True
-        #     else: return list of numbers checked
-
+    #log of the number of rounds
     number_of_rounds_started = ['1']
+
+    #log of all numbers checked
     all_numbers_checked = [[x, y]]
 
     #function for queueing jobs
     def job_handler(list_of_numbers = [[x, y]]):
-        #access the global rounds variable
-        #global number_of_rounds_started
-
-        #log another round started
-        #number_of_rounds_started = number_of_rounds_started + 1
 
         #tracks the number of jobs completed this round
         number_of_numbers_checked = 0
@@ -89,6 +84,7 @@ def solution(src, dest):
 
             #checks possible moves around each number
             numbers_checked = check_coordinates(number[0], number[1])
+
             #if the target number is in possible moves, return finish
             if (numbers_checked == "hit"): 
                 return len(number_of_rounds_started)
@@ -108,10 +104,14 @@ def solution(src, dest):
                 #print("numbers_for_this_round = ", numbers_for_this_round)
                 #print("new_list_of_numbers = ", new_list_of_numbers)
 
-                #restart process with new numbers
+                #log another round started
                 number_of_rounds_started.append('1')
+                
+                #restart process with the new numbers
                 return job_handler(new_list_of_numbers)
 
+    #initiate the job handler
     return job_handler()
+
 
 print(solution(0, 0))
